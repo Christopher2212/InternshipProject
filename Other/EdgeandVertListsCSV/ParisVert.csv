@@ -1,0 +1,36 @@
+id,	name,latitude,longitude
+1,"Concorde",48.8662658,2.3232175
+2,"Assemblee Nationale",48.8612875,2.3203557
+3,"Madeline",48.8702689,2.3255781
+4,"Invalides",48.8620183,2.3146401
+5,"Chaussee d'Antin - La Fayette",48.8731197,2.3330901
+6,"Opera",48.8708714,2.3322168
+7,"Bourse",48.8688118,2.3418624
+8,"Quatre-Septembre",48.8695922,2.3358823
+9,"Pyramides",48.8654543,2.334644
+10,"Palais Royal - Musee du Louvre",48.8624018,2.3366611
+11,"Richelieu Drouot",48.8720056,2.3393775
+12,"Le Peletier",48.8747048,2.3398963
+13,"Grands Boulevards",48.8713193,2.3435148
+14,"Sentier",48.86738,2.34708
+15,"Notre-Dame-de-Lorette",48.8761699,2.3385969
+16,"Trinite-d'Estienne d'Orves",48.8764983,2.3324992
+17,"Havere-Caumrtin",48.8735783,2.3272701
+18,"Saint Georges",48.8787,2.33742
+19,"Pigalle",48.8823844,2.3375771
+20,"Abbesses",48.884443,2.3385515
+21,"Liege",48.8796067,2.3268335
+22,"Place de Clichy",48.8836147,2.3278176
+23,"La Fourche",48.8876564,2.3254883
+24,"Europe",48.8788798,2.3227856
+25,"Saint-Lazare",48.8760918,2.3255973
+26,"Villiers",48.8813839,2.3153887
+27,"Malesherbes",48.88244,2.31023
+28,"Cadet",48.8760396,2.3440167
+29,"Poissonniere",48.8773174,2.3491434
+30,"Champs-Elysees-Clemenceau",48.8675202,2.3133341
+31,"Miromesnil",48.87372,2.3146
+32,"Saint-Augustin",48.87462,2.32028
+33,"Pont Neuf",48.8584354,2.3421855
+34,"Bonne Nouvelle",48.8709164,2.3471505
+35,"Strasbourge Saint-Dennis",48.8695373,2.3528779
