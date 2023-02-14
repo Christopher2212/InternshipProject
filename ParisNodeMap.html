@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": 1, "label": "Concorde", "shape": "dot"}, {"color": "#97c2fc", "id": 2, "label": "Assemblee Nationale", "shape": "dot"}, {"color": "#97c2fc", "id": 3, "label": "Madeline", "shape": "dot"}, {"color": "#97c2fc", "id": 4, "label": "Invalides", "shape": "dot"}, {"color": "#97c2fc", "id": 5, "label": "Chaussee d\u0027Antin - La Fayette", "shape": "dot"}, {"color": "#97c2fc", "id": 6, "label": "Opera", "shape": "dot"}, {"color": "#97c2fc", "id": 7, "label": "Bourse", "shape": "dot"}, {"color": "#97c2fc", "id": 8, "label": "Quatre-Septembre", "shape": "dot"}, {"color": "#97c2fc", "id": 9, "label": "Pyramides", "shape": "dot"}, {"color": "#97c2fc", "id": 10, "label": "Palais Royal - Musee du Louvre", "shape": "dot"}, {"color": "#97c2fc", "id": 11, "label": "Richelieu Drouot", "shape": "dot"}, {"color": "#97c2fc", "id": 12, "label": "Le Peletier", "shape": "dot"}, {"color": "#97c2fc", "id": 13, "label": "Grands Boulevards", "shape": "dot"}, {"color": "#97c2fc", "id": 14, "label": "Sentier", "shape": "dot"}, {"color": "#97c2fc", "id": 15, "label": "Notre-Dame-de-Lorette", "shape": "dot"}, {"color": "#97c2fc", "id": 16, "label": "Trinite-d\u0027Estienne d\u0027Orves", "shape": "dot"}, {"color": "#97c2fc", "id": 17, "label": "Havere-Caumrtin", "shape": "dot"}, {"color": "#97c2fc", "id": 18, "label": "Saint Georges", "shape": "dot"}, {"color": "#97c2fc", "id": 19, "label": "Pigalle", "shape": "dot"}, {"color": "#97c2fc", "id": 20, "label": "Abbesses", "shape": "dot"}, {"color": "#97c2fc", "id": 21, "label": "Liege", "shape": "dot"}, {"color": "#97c2fc", "id": 22, "label": "Place de Clichy", "shape": "dot"}, {"color": "#97c2fc", "id": 23, "label": "La Fourche", "shape": "dot"}, {"color": "#97c2fc", "id": 24, "label": "Europe", "shape": "dot"}, {"color": "#97c2fc", "id": 25, "label": "Saint-Lazare", "shape": "dot"}, {"color": "#97c2fc", "id": 26, "label": "Villiers", "shape": "dot"}, {"color": "#97c2fc", "id": 27, "label": "Malesherbes", "shape": "dot"}, {"color": "#97c2fc", "id": 28, "label": "Cadet", "shape": "dot"}, {"color": "#97c2fc", "id": 29, "label": "Poissonniere", "shape": "dot"}, {"color": "#97c2fc", "id": 30, "label": "Champs-Elysees-Clemenceau", "shape": "dot"}, {"color": "#97c2fc", "id": 31, "label": "Miromesnil", "shape": "dot"}, {"color": "#97c2fc", "id": 32, "label": "Saint-Augustin", "shape": "dot"}, {"color": "#97c2fc", "id": 33, "label": "Pont Neuf", "shape": "dot"}, {"color": "#97c2fc", "id": 34, "label": "Bonne Nouvelle", "shape": "dot"}, {"color": "#97c2fc", "id": 35, "label": "Strasbourge Saint-Dennis", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": 30, "title": 0.69642757458827, "to": 31, "weight": 0.69642757458827}, {"from": 31, "title": 0.8474441116501382, "to": 25, "weight": 0.8474441116501382}, {"from": 25, "title": 0.4016491325101447, "to": 21, "weight": 0.4016491325101447}, {"from": 21, "title": 0.4519942480802142, "to": 22, "weight": 0.4519942480802142}, {"from": 22, "title": 0.4811940912402508, "to": 23, "weight": 0.4811940912402508}, {"from": 27, "title": 0.39556101537804156, "to": 26, "weight": 0.39556101537804156}, {"from": 26, "title": 0.6091101506369236, "to": 24, "weight": 0.6091101506369236}, {"from": 24, "title": 0.37245838686116584, "to": 25, "weight": 0.37245838686116584}, {"from": 25, "title": 0.3054642280283679, "to": 17, "weight": 0.3054642280283679}, {"from": 17, "title": 0.47120156866434243, "to": 6, "weight": 0.47120156866434243}, {"from": 6, "title": 0.30386416709625275, "to": 8, "weight": 0.30386416709625275}, {"from": 8, "title": 0.4464662402168168, "to": 7, "weight": 0.4464662402168168}, {"from": 7, "title": 0.4140172948751127, "to": 14, "weight": 0.4140172948751127}, {"from": 2, "title": 0.5925469961655183, "to": 1, "weight": 0.5925469961655183}, {"from": 1, "title": 0.47802336240583126, "to": 3, "weight": 0.47802336240583126}, {"from": 3, "title": 0.6482711632528085, "to": 25, "weight": 0.6482711632528085}, {"from": 25, "title": 0.5073862622302512, "to": 16, "weight": 0.5073862622302512}, {"from": 16, "title": 0.4479737225891097, "to": 15, "weight": 0.4479737225891097}, {"from": 15, "title": 0.29456491230891524, "to": 18, "weight": 0.29456491230891524}, {"from": 18, "title": 0.41034939780772955, "to": 19, "weight": 0.41034939780772955}, {"from": 19, "title": 0.2400315869600918, "to": 20, "weight": 0.2400315869600918}, {"from": 31, "title": 0.42781206653353643, "to": 32, "weight": 0.42781206653353643}, {"from": 32, "title": 0.5248186982478777, "to": 17, "weight": 0.5248186982478777}, {"from": 17, "title": 0.42921870269605633, "to": 5, "weight": 0.42921870269605633}, {"from": 5, "title": 0.4768188870594034, "to": 11, "weight": 0.4768188870594034}, {"from": 11, "title": 0.3124514446209411, "to": 13, "weight": 0.3124514446209411}, {"from": 13, "title": 0.26998924041949524, "to": 34, "weight": 0.26998924041949524}, {"from": 34, "title": 0.4466362326452015, "to": 35, "weight": 0.4466362326452015}, {"from": 3, "title": 0.8532932663821411, "to": 9, "weight": 0.8532932663821411}, {"from": 4, "title": 0.7862870472621851, "to": 1, "weight": 0.7862870472621851}, {"from": 3, "title": 0.49075349188927836, "to": 6, "weight": 0.49075349188927836}, {"from": 6, "title": 0.539353865932017, "to": 11, "weight": 0.539353865932017}, {"from": 33, "title": 0.5989338594089932, "to": 10, "weight": 0.5989338594089932}, {"from": 10, "title": 0.37055935036608756, "to": 9, "weight": 0.37055935036608756}, {"from": 9, "title": 0.6287405829621324, "to": 6, "weight": 0.6287405829621324}, {"from": 6, "title": 0.25834553915207475, "to": 5, "weight": 0.25834553915207475}, {"from": 5, "title": 0.5287012529578481, "to": 12, "weight": 0.5287012529578481}, {"from": 12, "title": 0.3363175019103162, "to": 28, "weight": 0.3363175019103162}, {"from": 28, "title": 0.40143129543329564, "to": 29, "weight": 0.40143129543329564}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

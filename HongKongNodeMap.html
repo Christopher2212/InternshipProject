@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": 1, "label": "Kwai Fong", "shape": "dot"}, {"color": "#97c2fc", "id": 2, "label": "Lai King Station", "shape": "dot"}, {"color": "#97c2fc", "id": 3, "label": "Mei Foo Station", "shape": "dot"}, {"color": "#97c2fc", "id": 4, "label": "Lai Chi Kok Station", "shape": "dot"}, {"color": "#97c2fc", "id": 5, "label": "Cheung Sha Wan Station", "shape": "dot"}, {"color": "#97c2fc", "id": 6, "label": "Sham Shui Po Station", "shape": "dot"}, {"color": "#97c2fc", "id": 7, "label": "Prince Edward Station", "shape": "dot"}, {"color": "#97c2fc", "id": 8, "label": "Mong Kong", "shape": "dot"}, {"color": "#97c2fc", "id": 9, "label": "Yau Ma Tei Station", "shape": "dot"}, {"color": "#97c2fc", "id": 10, "label": "Jordan Station", "shape": "dot"}, {"color": "#97c2fc", "id": 11, "label": "Tsim Sha Tsui Station", "shape": "dot"}, {"color": "#97c2fc", "id": 12, "label": "Admiralty Station", "shape": "dot"}, {"color": "#97c2fc", "id": 13, "label": "Central Station", "shape": "dot"}, {"color": "#97c2fc", "id": 14, "label": "Hong Kong Station", "shape": "dot"}, {"color": "#97c2fc", "id": 15, "label": "Kowloon Station", "shape": "dot"}, {"color": "#97c2fc", "id": 16, "label": "Olympic Station", "shape": "dot"}, {"color": "#97c2fc", "id": 17, "label": "Nam Cheong Station", "shape": "dot"}, {"color": "#97c2fc", "id": 18, "label": "Tsing Yi Station", "shape": "dot"}, {"color": "#97c2fc", "id": 19, "label": "Austin Station", "shape": "dot"}, {"color": "#97c2fc", "id": 20, "label": "East Tsim Sha Tsui Station", "shape": "dot"}, {"color": "#97c2fc", "id": 21, "label": "Hung Hom Station", "shape": "dot"}, {"color": "#97c2fc", "id": 22, "label": "Ho Man Tin Station", "shape": "dot"}, {"color": "#97c2fc", "id": 23, "label": "To Kwa Wan Station", "shape": "dot"}, {"color": "#97c2fc", "id": 24, "label": "Sung Wong Toi", "shape": "dot"}, {"color": "#97c2fc", "id": 25, "label": "Kai Tak Station", "shape": "dot"}, {"color": "#97c2fc", "id": 26, "label": "Diamond Hill Station", "shape": "dot"}, {"color": "#97c2fc", "id": 27, "label": "Hin Keng Station", "shape": "dot"}, {"color": "#97c2fc", "id": 28, "label": "Wong Tai Sin Station", "shape": "dot"}, {"color": "#97c2fc", "id": 29, "label": "Lok Fu Station", "shape": "dot"}, {"color": "#97c2fc", "id": 30, "label": "Kowloon Tong Station", "shape": "dot"}, {"color": "#97c2fc", "id": 31, "label": "Shek Kip Mei Station", "shape": "dot"}, {"color": "#97c2fc", "id": 32, "label": "Whampoa Station", "shape": "dot"}, {"color": "#97c2fc", "id": 33, "label": "Tai Wai Station", "shape": "dot"}, {"color": "#97c2fc", "id": 34, "label": "Mong Kok East Station", "shape": "dot"}, {"color": "#97c2fc", "id": 35, "label": "Exhibition Centre", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": 1, "title": 0.9522282907217964, "to": 2, "weight": 0.9522282907217964}, {"from": 2, "title": 1.713520082802829, "to": 3, "weight": 1.713520082802829}, {"from": 3, "title": 1.0663987736315508, "to": 4, "weight": 1.0663987736315508}, {"from": 4, "title": 0.8038327307634097, "to": 5, "weight": 0.8038327307634097}, {"from": 5, "title": 0.8407942871917137, "to": 6, "weight": 0.8407942871917137}, {"from": 6, "title": 0.8944957271921483, "to": 7, "weight": 0.8944957271921483}, {"from": 7, "title": 0.6557585425809063, "to": 8, "weight": 0.6557585425809063}, {"from": 8, "title": 0.7279844553348656, "to": 9, "weight": 0.7279844553348656}, {"from": 10, "title": 0.8055564207465292, "to": 11, "weight": 0.8055564207465292}, {"from": 11, "title": 2.1697637136911, "to": 12, "weight": 2.1697637136911}, {"from": 12, "title": 0.7086156368123033, "to": 13, "weight": 0.7086156368123033}, {"from": 13, "title": 0.3038104645556692, "to": 14, "weight": 0.3038104645556692}, {"from": 14, "title": 2.2111258345327114, "to": 15, "weight": 2.2111258345327114}, {"from": 15, "title": 1.5134105302414806, "to": 16, "weight": 1.5134105302414806}, {"from": 16, "title": 1.1963884480812201, "to": 17, "weight": 1.1963884480812201}, {"from": 17, "title": 3.719421477342404, "to": 2, "weight": 3.719421477342404}, {"from": 2, "title": 2.2099726192666167, "to": 18, "weight": 2.2099726192666167}, {"from": 1, "title": 2.384862109898817, "to": 3, "weight": 2.384862109898817}, {"from": 3, "title": 2.613109591624313, "to": 6, "weight": 2.613109591624313}, {"from": 6, "title": 2.864203563904883, "to": 19, "weight": 2.864203563904883}, {"from": 19, "title": 1.3894177887764816, "to": 20, "weight": 1.3894177887764816}, {"from": 20, "title": 1.2586950519244524, "to": 21, "weight": 1.2586950519244524}, {"from": 21, "title": 0.6823590839611895, "to": 22, "weight": 0.6823590839611895}, {"from": 22, "title": 1.0174169341900294, "to": 23, "weight": 1.0174169341900294}, {"from": 23, "title": 1.0304902674095018, "to": 24, "weight": 1.0304902674095018}, {"from": 24, "title": 0.9954036904272172, "to": 25, "weight": 0.9954036904272172}, {"from": 25, "title": 1.0747747025066967, "to": 26, "weight": 1.0747747025066967}, {"from": 26, "title": 4.142344541917464, "to": 27, "weight": 4.142344541917464}, {"from": 26, "title": 0.8285857897557342, "to": 28, "weight": 0.8285857897557342}, {"from": 28, "title": 0.8112044373689605, "to": 29, "weight": 0.8112044373689605}, {"from": 29, "title": 1.1295824787037414, "to": 30, "weight": 1.1295824787037414}, {"from": 30, "title": 0.9374301103011152, "to": 31, "weight": 0.9374301103011152}, {"from": 31, "title": 0.7852139974477222, "to": 7, "weight": 0.7852139974477222}, {"from": 7, "title": 1.383514376522955, "to": 9, "weight": 1.383514376522955}, {"from": 9, "title": 1.299802300174843, "to": 22, "weight": 1.299802300174843}, {"from": 22, "title": 0.8519687414384303, "to": 32, "weight": 0.8519687414384303}, {"from": 33, "title": 3.9662076842665903, "to": 30, "weight": 3.9662076842665903}, {"from": 30, "title": 1.720055755255486, "to": 34, "weight": 1.720055755255486}, {"from": 34, "title": 2.2732551819556446, "to": 21, "weight": 2.2732551819556446}, {"from": 21, "title": 2.4389393434961746, "to": 35, "weight": 2.4389393434961746}, {"from": 35, "title": 1.1674724785326636, "to": 12, "weight": 1.1674724785326636}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

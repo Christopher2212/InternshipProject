@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": 1, "label": "Meidling HauptstraBe", "shape": "dot"}, {"color": "#97c2fc", "id": 2, "label": "Langenfeldgasse", "shape": "dot"}, {"color": "#97c2fc", "id": 3, "label": "Margaretengurtel", "shape": "dot"}, {"color": "#97c2fc", "id": 4, "label": "Pilgramgasse", "shape": "dot"}, {"color": "#97c2fc", "id": 5, "label": "Kettenbruckengasse", "shape": "dot"}, {"color": "#97c2fc", "id": 6, "label": "Karlsplatz", "shape": "dot"}, {"color": "#97c2fc", "id": 7, "label": "Stadtpark", "shape": "dot"}, {"color": "#97c2fc", "id": 8, "label": "LandstraBe", "shape": "dot"}, {"color": "#97c2fc", "id": 9, "label": "Schwedenplatz", "shape": "dot"}, {"color": "#97c2fc", "id": 10, "label": "Schottenring", "shape": "dot"}, {"color": "#97c2fc", "id": 11, "label": "RoBauer Lande", "shape": "dot"}, {"color": "#97c2fc", "id": 12, "label": "Friedensbruke", "shape": "dot"}, {"color": "#97c2fc", "id": 13, "label": "Spittelau", "shape": "dot"}, {"color": "#97c2fc", "id": 14, "label": "NuBdorfer StraBe", "shape": "dot"}, {"color": "#97c2fc", "id": 15, "label": "Wahringer Strasse", "shape": "dot"}, {"color": "#97c2fc", "id": 16, "label": "Michelbeuern AKH", "shape": "dot"}, {"color": "#97c2fc", "id": 17, "label": "Alser StraBe", "shape": "dot"}, {"color": "#97c2fc", "id": 18, "label": "Josefstadter StraBe", "shape": "dot"}, {"color": "#97c2fc", "id": 19, "label": "ThaliastraBe", "shape": "dot"}, {"color": "#97c2fc", "id": 20, "label": "Burggasse-Stadthalle", "shape": "dot"}, {"color": "#97c2fc", "id": 21, "label": "Gare de I\u0027Ouest", "shape": "dot"}, {"color": "#97c2fc", "id": 22, "label": "Gumpendorfer StraBe", "shape": "dot"}, {"color": "#97c2fc", "id": 23, "label": "VorgartenstraBe", "shape": "dot"}, {"color": "#97c2fc", "id": 24, "label": "Praterstern", "shape": "dot"}, {"color": "#97c2fc", "id": 25, "label": "Nestroplatz", "shape": "dot"}, {"color": "#97c2fc", "id": 26, "label": "Stephansplatz", "shape": "dot"}, {"color": "#97c2fc", "id": 27, "label": "Stubentor", "shape": "dot"}, {"color": "#97c2fc", "id": 28, "label": "Herrengasse", "shape": "dot"}, {"color": "#97c2fc", "id": 29, "label": "Volkstheater", "shape": "dot"}, {"color": "#97c2fc", "id": 30, "label": "Neubaugasse", "shape": "dot"}, {"color": "#97c2fc", "id": 31, "label": "Ziglergasse", "shape": "dot"}, {"color": "#97c2fc", "id": 32, "label": "Messe - Prater", "shape": "dot"}, {"color": "#97c2fc", "id": 33, "label": "TaborstraBe", "shape": "dot"}, {"color": "#97c2fc", "id": 34, "label": "Schottentor", "shape": "dot"}, {"color": "#97c2fc", "id": 35, "label": "Museumquarter", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": 1, "title": 0.5584280207514145, "to": 2, "weight": 0.5584280207514145}, {"from": 2, "title": 0.8284945738514772, "to": 3, "weight": 0.8284945738514772}, {"from": 3, "title": 0.9259565198925884, "to": 4, "weight": 0.9259565198925884}, {"from": 4, "title": 0.5724648963827963, "to": 5, "weight": 0.5724648963827963}, {"from": 5, "title": 0.8930752968595292, "to": 6, "weight": 0.8930752968595292}, {"from": 6, "title": 0.7419606219396275, "to": 7, "weight": 0.7419606219396275}, {"from": 7, "title": 0.7284286040992304, "to": 8, "weight": 0.7284286040992304}, {"from": 8, "title": 0.7281577748754248, "to": 9, "weight": 0.7281577748754248}, {"from": 9, "title": 0.8046022049495574, "to": 10, "weight": 0.8046022049495574}, {"from": 10, "title": 0.6454329049731808, "to": 11, "weight": 0.6454329049731808}, {"from": 11, "title": 0.5883178927023092, "to": 12, "weight": 0.5883178927023092}, {"from": 12, "title": 1.046274770384861, "to": 13, "weight": 1.046274770384861}, {"from": 13, "title": 0.6310862515006282, "to": 14, "weight": 0.6310862515006282}, {"from": 14, "title": 0.6823844721964057, "to": 15, "weight": 0.6823844721964057}, {"from": 15, "title": 0.6931078491496461, "to": 16, "weight": 0.6931078491496461}, {"from": 16, "title": 0.44862361290617325, "to": 17, "weight": 0.44862361290617325}, {"from": 17, "title": 0.6276299332043884, "to": 18, "weight": 0.6276299332043884}, {"from": 18, "title": 0.43327791223533685, "to": 19, "weight": 0.43327791223533685}, {"from": 19, "title": 0.5244418799334191, "to": 20, "weight": 0.5244418799334191}, {"from": 20, "title": 0.6811920723825998, "to": 21, "weight": 0.6811920723825998}, {"from": 21, "title": 0.6998312741085031, "to": 22, "weight": 0.6998312741085031}, {"from": 22, "title": 0.7513336759621638, "to": 2, "weight": 0.7513336759621638}, {"from": 23, "title": 0.8653506061337465, "to": 24, "weight": 0.8653506061337465}, {"from": 24, "title": 0.5036185929971316, "to": 25, "weight": 0.5036185929971316}, {"from": 25, "title": 0.8209305286123515, "to": 9, "weight": 0.8209305286123515}, {"from": 9, "title": 0.625123254258619, "to": 26, "weight": 0.625123254258619}, {"from": 26, "title": 0.8347608672816813, "to": 6, "weight": 0.8347608672816813}, {"from": 8, "title": 0.446635949445743, "to": 27, "weight": 0.446635949445743}, {"from": 27, "title": 0.6264524182326221, "to": 26, "weight": 0.6264524182326221}, {"from": 26, "title": 0.39647898153913985, "to": 28, "weight": 0.39647898153913985}, {"from": 28, "title": 0.8275581441135349, "to": 29, "weight": 0.8275581441135349}, {"from": 29, "title": 0.7782511286420984, "to": 30, "weight": 0.7782511286420984}, {"from": 30, "title": 0.48857952260955906, "to": 31, "weight": 0.48857952260955906}, {"from": 31, "title": 0.5269442857977666, "to": 21, "weight": 0.5269442857977666}, {"from": 32, "title": 0.8712724787692108, "to": 24, "weight": 0.8712724787692108}, {"from": 24, "title": 0.85149942198539, "to": 33, "weight": 0.85149942198539}, {"from": 33, "title": 1.490856494944719, "to": 34, "weight": 1.490856494944719}, {"from": 34, "title": 1.202691566892576, "to": 35, "weight": 1.202691566892576}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

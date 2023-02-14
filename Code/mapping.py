@@ -12,12 +12,12 @@ def makeNetwork(nodeListName, edgeListName, nodeMapName):
     print(edgeList.to_string())
     nodeNetwork = Network()
 
-    for i, row in nodeList.iterrows():
+    for row in nodeList.iterrows():
         #add nodes to the list
         print(row["id"])
         print(row["name"])
         nodeNetwork.add_node(n_id = row["id"], label = row["name"])
-    for i, row in edgeList.iterrows():
+    for row in edgeList.iterrows():
         
         lat1 = nodeList["latitude"].loc[nodeList.index[row["from"]-1]]/(180/PI)
         lat2 = nodeList["latitude"].loc[nodeList.index[row["to"]-1]]/(180/PI)
@@ -30,3 +30,4 @@ def makeNetwork(nodeListName, edgeListName, nodeMapName):
         
     nodeNetwork.barnes_hut()
     nodeNetwork.save_graph(nodeMapName) 
+    return nodeNetwork

@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": 1, "label": "Ventas", "shape": "dot"}, {"color": "#97c2fc", "id": 2, "label": "Diego de Leon", "shape": "dot"}, {"color": "#97c2fc", "id": 3, "label": "Nunez de Balboa", "shape": "dot"}, {"color": "#97c2fc", "id": 4, "label": "Ruben Dario", "shape": "dot"}, {"color": "#97c2fc", "id": 5, "label": "Alonso Martinez", "shape": "dot"}, {"color": "#97c2fc", "id": 6, "label": "Chueca", "shape": "dot"}, {"color": "#97c2fc", "id": 7, "label": "Gran Via", "shape": "dot"}, {"color": "#97c2fc", "id": 8, "label": "Callao", "shape": "dot"}, {"color": "#97c2fc", "id": 9, "label": "Opera", "shape": "dot"}, {"color": "#97c2fc", "id": 10, "label": "Manuel Becerra", "shape": "dot"}, {"color": "#97c2fc", "id": 11, "label": "Goya", "shape": "dot"}, {"color": "#97c2fc", "id": 12, "label": "Principe de Vergara", "shape": "dot"}, {"color": "#97c2fc", "id": 13, "label": "Retiro", "shape": "dot"}, {"color": "#97c2fc", "id": 14, "label": "Banco de Espana", "shape": "dot"}, {"color": "#97c2fc", "id": 15, "label": "Sevilla", "shape": "dot"}, {"color": "#97c2fc", "id": 16, "label": "Sol", "shape": "dot"}, {"color": "#97c2fc", "id": 17, "label": "Santo Domingo", "shape": "dot"}, {"color": "#97c2fc", "id": 18, "label": "Noviciado", "shape": "dot"}, {"color": "#97c2fc", "id": 19, "label": "San Bernardo", "shape": "dot"}, {"color": "#97c2fc", "id": 20, "label": "Quevedo", "shape": "dot"}, {"color": "#97c2fc", "id": 21, "label": "Canal", "shape": "dot"}, {"color": "#97c2fc", "id": 22, "label": "Alonso Cano", "shape": "dot"}, {"color": "#97c2fc", "id": 23, "label": "Gregorio Maranon", "shape": "dot"}, {"color": "#97c2fc", "id": 24, "label": "Avenida de America", "shape": "dot"}, {"color": "#97c2fc", "id": 25, "label": "Lista", "shape": "dot"}, {"color": "#97c2fc", "id": 26, "label": "Velazquez", "shape": "dot"}, {"color": "#97c2fc", "id": 27, "label": "Serrano", "shape": "dot"}, {"color": "#97c2fc", "id": 28, "label": "Colon", "shape": "dot"}, {"color": "#97c2fc", "id": 29, "label": "Bilbao", "shape": "dot"}, {"color": "#97c2fc", "id": 30, "label": "Rios Rosas", "shape": "dot"}, {"color": "#97c2fc", "id": 31, "label": "Iglesia", "shape": "dot"}, {"color": "#97c2fc", "id": 32, "label": "Tribunal", "shape": "dot"}, {"color": "#97c2fc", "id": 33, "label": "Cruz del Rayo", "shape": "dot"}, {"color": "#97c2fc", "id": 34, "label": "Moncloa", "shape": "dot"}, {"color": "#97c2fc", "id": 35, "label": "Arguelles", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": 1, "title": 1.0573087372210717, "to": 2, "weight": 1.0573087372210717}, {"from": 2, "title": 0.7127608979322557, "to": 3, "weight": 0.7127608979322557}, {"from": 3, "title": 0.5089098969395432, "to": 4, "weight": 0.5089098969395432}, {"from": 4, "title": 0.8316951969528251, "to": 5, "weight": 0.8316951969528251}, {"from": 5, "title": 0.5965731434702868, "to": 6, "weight": 0.5965731434702868}, {"from": 6, "title": 0.45131187730195493, "to": 7, "weight": 0.45131187730195493}, {"from": 7, "title": 0.3530919747864352, "to": 8, "weight": 0.3530919747864352}, {"from": 8, "title": 0.3786446508260555, "to": 9, "weight": 0.3786446508260555}, {"from": 1, "title": 0.6014383778543402, "to": 10, "weight": 0.6014383778543402}, {"from": 10, "title": 0.6800570959616553, "to": 11, "weight": 0.6800570959616553}, {"from": 11, "title": 0.36660934081662466, "to": 12, "weight": 0.36660934081662466}, {"from": 12, "title": 0.5734250338832287, "to": 13, "weight": 0.5734250338832287}, {"from": 13, "title": 0.799404568044615, "to": 14, "weight": 0.799404568044615}, {"from": 14, "title": 0.39097069864486145, "to": 15, "weight": 0.39097069864486145}, {"from": 15, "title": 0.34746097083687283, "to": 16, "weight": 0.34746097083687283}, {"from": 16, "title": 0.5410778601582942, "to": 9, "weight": 0.5410778601582942}, {"from": 9, "title": 0.3799089916792317, "to": 17, "weight": 0.3799089916792317}, {"from": 17, "title": 0.37806400457593237, "to": 18, "weight": 0.37806400457593237}, {"from": 18, "title": 0.5717444877167781, "to": 19, "weight": 0.5717444877167781}, {"from": 19, "title": 0.39425144866305295, "to": 20, "weight": 0.39425144866305295}, {"from": 20, "title": 0.5670208482639525, "to": 21, "weight": 0.5670208482639525}, {"from": 21, "title": 0.42265753567051434, "to": 22, "weight": 0.42265753567051434}, {"from": 22, "title": 0.6889208129064868, "to": 23, "weight": 0.6889208129064868}, {"from": 23, "title": 1.2330549974375904, "to": 24, "weight": 1.2330549974375904}, {"from": 24, "title": 0.9923390811924805, "to": 25, "weight": 0.9923390811924805}, {"from": 25, "title": 0.5160920674709514, "to": 11, "weight": 0.5160920674709514}, {"from": 11, "title": 0.5943974874386739, "to": 26, "weight": 0.5943974874386739}, {"from": 26, "title": 0.3202697696376549, "to": 27, "weight": 0.3202697696376549}, {"from": 27, "title": 0.3698374179723119, "to": 28, "weight": 0.3698374179723119}, {"from": 28, "title": 0.4926423723774704, "to": 5, "weight": 0.4926423723774704}, {"from": 5, "title": 0.5488931883798223, "to": 29, "weight": 0.5488931883798223}, {"from": 29, "title": 0.3406818581141448, "to": 19, "weight": 0.3406818581141448}, {"from": 19, "title": 0.852693999883412, "to": 35, "weight": 0.852693999883412}, {"from": 30, "title": 0.7604521728727612, "to": 31, "weight": 0.7604521728727612}, {"from": 31, "title": 0.7081028853837287, "to": 29, "weight": 0.7081028853837287}, {"from": 29, "title": 0.3349821472631101, "to": 32, "weight": 0.3349821472631101}, {"from": 32, "title": 0.7718548920345043, "to": 17, "weight": 0.7718548920345043}, {"from": 17, "title": 0.6462525154871056, "to": 16, "weight": 0.6462525154871056}, {"from": 33, "title": 0.7065432433411909, "to": 24, "weight": 0.7065432433411909}, {"from": 24, "title": 0.7968881037945259, "to": 3, "weight": 0.7968881037945259}, {"from": 3, "title": 1.1206857460389028, "to": 12, "weight": 1.1206857460389028}, {"from": 34, "title": 0.5101488245780288, "to": 35, "weight": 0.5101488245780288}, {"from": 32, "title": 0.48104315726377656, "to": 5, "weight": 0.48104315726377656}, {"from": 5, "title": 1.2087359967674733, "to": 23, "weight": 1.2087359967674733}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
